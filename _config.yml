@@ -1,5 +1,5 @@
-title: Project work template
-description: A starter template for Software Engineering project work!
+title: Fractal Zoomer
+description: An interactive fractal exploration application supporting infinite zoom, multiple fractal types, and real-time rendering.
 remote_theme: pmarsceill/just-the-docs
 color_scheme: "light"
 search_enabled: true
