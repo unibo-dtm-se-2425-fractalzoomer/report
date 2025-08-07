@@ -6,17 +6,17 @@ nav_order: 2
 
 # Concept
 
-Here you should explain:
-- The type of product developed with that project, for example (non-exhaustive):
-    - Application (with GUI, be it mobile, web, or desktop)
-    - Command-line application (CLI could be used by humans or scripts)
-    - Library
-    - Web-service(s)
-    - Data processing toolkit (= Library + CLI, or Jupyter Notebook)
+**Fractal Zoomer** is an interactive desktop and web application that allows users to explore fractal images with infinite zoom capabilities.
 
-- Use case collection
-    - Where are the users?
-    - When and how frequently do they interact with the system?
-    - How do they interact with the system? Which devices are they using?
-    - Does the system need to store user's data? Which data? Where?
-    - Most likely, there will be multiple roles.
+### Product Type
+- Application with a graphical user interface (both web and desktop versions).
+
+### Use Cases
+- **Users**: Students, researchers, and hobbyists interested in fractals and mathematical visualization.
+- **Interaction Frequency**: Users typically interact with the system during study sessions or recreational exploration, ranging from a few minutes to hours.
+- **Interaction Devices**: Mainly desktop or laptop computers with mouse and keyboard, but the web version supports touch navigation on tablets.
+- **Data Storage**: The system does not store user data persistently. User-generated images can be exported locally, but no user data is saved on the server.
+
+### User Roles
+- **Explorer**: Navigates and zooms into fractals, customizes parameters, and exports images.
+- **Researcher**: Uses advanced customization options for fractal parameters to analyze mathematical properties.
