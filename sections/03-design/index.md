@@ -53,37 +53,30 @@ UI --> [tkinter]
 UI --> [Pillow]
 UI --> [NumPy]
 @enduml
-Component Responsibilities
-Presentation Layer (FractalZoomerUI)
+```
 
-Capture user input events
+### Component Responsibilities
+**Presentation Layer (FractalZoomerUI)**
+-Capture user input events
+-Manage view state
+-Coordinate fractal computations
+-Render visual output
 
-Manage view state
+**Business Logic Layer (Fractal Classes)**
+-Implement mathematical algorithms
+-Calculate iteration counts
+-Provide consistent interface
 
-Coordinate fractal computations
+**Foundation Layer**
+-NumPy: Numerical operations
+-Pillow: Image creation
+-tkinter: GUI framework
 
-Render visual output
+## Modelling
+### Object-Oriented Design
+#### Class Diagram
 
-Business Logic Layer (Fractal Classes)
-
-Implement mathematical algorithms
-
-Calculate iteration counts
-
-Provide consistent interface
-
-Foundation Layer
-
-NumPy: Numerical operations
-
-Pillow: Image creation
-
-tkinter: GUI framework
-
-Modelling
-Object-Oriented Design
-Class Diagram
-
+```plantuml
 @startuml
 class FractalZoomerUI {
   - root: Tk
@@ -123,9 +116,12 @@ FractalZoomerUI *-- MandelbrotSet
 FractalZoomerUI *-- JuliaSet
 FractalZoomerUI *-- BurningShipSet
 @enduml
+```
 
-Interaction
-Sequence Diagram: Zoom Interaction
+## Interaction
+### Sequence Diagram: Zoom Interaction
+
+```plantuml
 @startuml
 actor User
 participant "UI" as UI
@@ -139,39 +135,36 @@ loop each pixel
 end
 UI -> UI: display
 @enduml
+```
 
-Behaviour
-State Diagram
+## Behaviour
+### State Diagram
+```plantuml
 @startuml
 [*] --> Ready
 Ready --> Rendering : user action
 Rendering --> Ready : complete
 @enduml
-Performance
-Optimizations
-Quick Interior Tests (Mandelbrot): ~20% faster
+```
 
-Integer Arithmetic: Grayscale mapping
+## Performance
+### Optimizations
+-Quick Interior Tests (Mandelbrot): ~20% faster
+-Integer Arithmetic: Grayscale mapping
+-Simple Algorithms: Clear, adequate performance
 
-Simple Algorithms: Clear, adequate performance
-
-Current Limitations
+### Current Limitations
 Single-threaded
 
 ~2-3 seconds for 600×400 at 256 iterations
+### Future Options
+-Multiprocessing
+-NumPy vectorization
+-GPU acceleration
 
-Future Options
-Multiprocessing
-
-NumPy vectorization
-
-GPU acceleration
-
-Technology Justification
+## Technology Justification
 Python 3.8+: Rapid development, readable
 
-tkinter: Built-in, zero dependencies
-
-NumPy: Industry standard, optimized
-
-Pillow: Simple image creation
+-tkinter: Built-in, zero dependencies
+-NumPy: Industry standard, optimized
+-Pillow: Simple image creation
