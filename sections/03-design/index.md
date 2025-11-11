@@ -53,7 +53,6 @@ UI --> [tkinter]
 UI --> [Pillow]
 UI --> [NumPy]
 @enduml
-
 Component Responsibilities
 Presentation Layer (FractalZoomerUI)
 
@@ -84,6 +83,7 @@ tkinter: GUI framework
 Modelling
 Object-Oriented Design
 Class Diagram
+
 @startuml
 class FractalZoomerUI {
   - root: Tk
@@ -91,28 +91,18 @@ class FractalZoomerUI {
   - center_x: float
   - center_y: float
   - half_width: float
-  - half_height: float
   - max_iter: int
   - fractal_type: str
-  - mandelbrot: MandelbrotSet
-  - julia: JuliaSet
-  - burning_ship: BurningShipSet
   __
   + __init__(root: Tk)
-  + setup_ui(): void
   + render_fractal(): void
   + zoom_in(event: Event): void
-  + zoom_out(event: Event): void
-  + update_iterations(value: int): void
-  + change_fractal(): void
 }
 
 class MandelbrotSet {
   - max_iter: int
   __
-  + __init__(max_iter: int)
   + iterations(re: float, im: float): int
-  + {static} inside_fast(re: float, im: float): bool
 }
 
 class JuliaSet {
@@ -120,14 +110,12 @@ class JuliaSet {
   - ci: float
   - max_iter: int
   __
-  + __init__(cr: float, ci: float, max_iter: int)
   + iterations(zr: float, zi: float): int
 }
 
 class BurningShipSet {
   - max_iter: int
   __
-  + __init__(max_iter: int)
   + iterations(c_re: float, c_im: float): int
 }
 
@@ -144,74 +132,20 @@ participant "UI" as UI
 participant "Fractal" as F
 
 User -> UI: click canvas
-activate UI
-UI -> UI: calculate bounds
 UI -> UI: render_fractal()
-
 loop each pixel
   UI -> F: iterations(x, y)
   F --> UI: count
 end
-
-UI -> UI: create image
 UI -> UI: display
-User <-- UI: updated view
-deactivate UI
-@enduml
-
-Sequence Diagram: Slider Update
-@startuml
-actor User
-participant "UI" as UI
-participant "MandelbrotSet" as MB
-participant "JuliaSet" as JS
-participant "BurningShipSet" as BS
-
-User -> UI: move slider
-activate UI
-UI -> MB: max_iter = value
-UI -> JS: max_iter = value
-UI -> BS: max_iter = value
-UI -> UI: render_fractal()
-User <-- UI: updated fractal
-deactivate UI
 @enduml
 
 Behaviour
 State Diagram
 @startuml
-[*] --> Initializing
-Initializing --> Ready : setup complete
-
-state Ready {
-  [*] --> AwaitingInput
-}
-
-Ready --> Processing : user action
-Processing --> Rendering : parameters updated
-Rendering --> Ready : render complete
-Ready --> [*] : window closed
-@enduml
-
-Activity Diagram: Fractal Computation
-@startuml
-start
-:Initialize z = 0, i = 0;
-
-repeat
-  if (|z| > 2?) then (yes)
-    :return i;
-    stop
-  endif
-  
-  if (i >= max_iter?) then (yes)
-    :return max_iter;
-    stop
-  endif
-  
-  :z = z² + c;
-  :i++;
-repeat while (continue)
+[*] --> Ready
+Ready --> Rendering : user action
+Rendering --> Ready : complete
 @enduml
 Performance
 Optimizations
@@ -233,29 +167,11 @@ NumPy vectorization
 
 GPU acceleration
 
-Progressive rendering
-
 Technology Justification
-Python 3.8+
+Python 3.8+: Rapid development, readable
 
-Rapid development, readable
+tkinter: Built-in, zero dependencies
 
-Decision: Development speed prioritized
+NumPy: Industry standard, optimized
 
-tkinter
-
-Built-in, zero dependencies
-
-Decision: Simplicity worth trade-off
-
-NumPy
-
-Industry standard, optimized
-
-Decision: Performance justifies dependency
-
-Pillow
-
-Simple image creation
-
-Decision: Simplifies rendering
+Pillow: Simple image creation
