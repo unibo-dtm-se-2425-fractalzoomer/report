@@ -52,33 +52,38 @@ UI --> [tkinter]
 UI --> [Pillow]
 UI --> [NumPy]
 @enduml
+Component Responsibilities
+Presentation Layer (FractalZoomerUI)
 
+Capture user input events
 
+Manage view state
 
-### Component Responsibilities
+Coordinate fractal computations
 
-**Presentation Layer (FractalZoomerUI)**
-- Capture user input events
-- Manage view state
-- Coordinate fractal computations
-- Render visual output
+Render visual output
 
-**Business Logic Layer (Fractal Classes)**
-- Implement mathematical algorithms
-- Calculate iteration counts
-- Provide consistent interface
+Business Logic Layer (Fractal Classes)
 
-**Foundation Layer**
-- NumPy: Numerical operations
-- Pillow: Image creation
-- tkinter: GUI framework
+Implement mathematical algorithms
 
-## Modelling
+Calculate iteration counts
 
-### Object-Oriented Design
+Provide consistent interface
 
-#### Class Diagram
+Foundation Layer
 
+NumPy: Numerical operations
+
+Pillow: Image creation
+
+tkinter: GUI framework
+
+Modelling
+Object-Oriented Design
+Class Diagram
+
+```plantuml
 @startuml
 class FractalZoomerUI {
 
@@ -160,13 +165,13 @@ FractalZoomerUI *-- MandelbrotSet
 FractalZoomerUI *-- JuliaSet
 FractalZoomerUI *-- BurningShipSet
 @enduml
-
-
+```
 
 ## Interaction
-
 ### Sequence Diagram: Zoom Interaction
 
+Interaction
+Sequence Diagram: Zoom Interaction
 @startuml
 actor User
 participant "UI" as UI
@@ -228,11 +233,10 @@ Processing --> Rendering : parameters updated
 Rendering --> Ready : render complete
 Ready --> [*] : window closed
 @enduml
+```
 
-
-
-### Activity Diagram: Fractal Computation
-
+Behaviour
+State Diagram
 @startuml
 start
 :Initialize z = 0, i = 0;
@@ -252,42 +256,34 @@ endif
 :i++;
 repeat while (continue)
 @enduml
+Performance
+Optimizations
+Quick Interior Tests (Mandelbrot): ~20% faster
 
+Integer Arithmetic: Grayscale mapping
 
+Simple Algorithms: Clear, adequate performance
 
-## Performance
+Current Limitations
+Single-threaded
 
-### Optimizations
+~2-3 seconds for 600×400 at 256 iterations
 
-1. **Quick Interior Tests** (Mandelbrot): ~20% faster
-2. **Integer Arithmetic**: Grayscale mapping
-3. **Simple Algorithms**: Clear, adequate performance
+Future Options
+Multiprocessing
 
-### Current Limitations
+NumPy vectorization
 
-- Single-threaded
-- ~2-3 seconds for 600×400 at 256 iterations
+GPU acceleration
 
-### Future Options
+Technology Justification
+Python 3.8+: Rapid development, readable
 
-- Multiprocessing
-- NumPy vectorization
-- GPU acceleration
-- Progressive rendering
+tkinter: Built-in, zero dependencies
 
-## Technology Justification
+NumPy: Industry standard, optimized
 
-**Python 3.8+**
-- Rapid development, readable
-- Decision: Development speed prioritized
-
-**tkinter**
-- Built-in, zero dependencies
-- Decision: Simplicity worth trade-off
-
-**NumPy**
-- Industry standard, optimized
-- Decision: Performance justifies dependency
+Pillow: Simple image creation
 
 **Pillow**
 - Simple image creation
