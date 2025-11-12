@@ -54,32 +54,32 @@ UI --> [NumPy]
 @enduml
 ```
 
-##Component Responsibilities
+## Component Responsibilities
 
-###Presentation Layer (FractalZoomerUI)
+### Presentation Layer (FractalZoomerUI)
 
 -Capture user input events
 -Manage view state
 -Coordinate fractal computations
 -Render visual output
 
-###Business Logic Layer (Fractal Classes)
+### Business Logic Layer (Fractal Classes)
 
 -Implement mathematical algorithms
 -Calculate iteration counts
 -Provide consistent interface
 
-###Foundation Layer
+### Foundation Layer
 
 -NumPy: Numerical operations
 -Pillow: Image creation
 -tkinter: GUI framework
 
-##Modelling
+## Modelling
 
-###Object-Oriented Design
+### Object-Oriented Design
 
-####Class Diagram
+#### Class Diagram
 
 ```plantuml
 @startuml
@@ -232,7 +232,7 @@ Ready --> [*] : window closed
 @enduml
 ```
 
-###Fractal Iteration Algorithm Flow
+### Fractal Iteration Algorithm Flow
 
 ```plantuml
 @startuml
@@ -256,23 +256,23 @@ repeat while (continue)
 @enduml
 ```
 
-##Performance
-###Optimizations
+## Performance
+### Optimizations
 
 -Quick Interior Tests (Mandelbrot): ~20% faster
 -Integer Arithmetic: Grayscale mapping
 -Simple Algorithms: Clear, adequate performance
 
-###Current Limitations
+### Current Limitations
 -Single-threaded
 -~2-3 seconds for 600×400 at 256 iterations
 
-###Future Options
+### Future Options
 -Multiprocessing
 -NumPy vectorization
 -GPU acceleration
 
-##Technology Justification
+## Technology Justification
 -Python 3.8+: Rapid development, readable
 -tkinter: Built-in, zero dependencies
 -NumPy: Industry standard, optimized
