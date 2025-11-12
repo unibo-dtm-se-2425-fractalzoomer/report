@@ -27,7 +27,7 @@ This chapter explains the design strategies used to meet the requirements identi
 - **Microservices**: Single-machine application
 
 ### Component Diagram
-
+```plantuml
 @startuml
 package "Presentation Layer" {
 component [FractalZoomerUI] as UI
@@ -52,36 +52,34 @@ UI --> [tkinter]
 UI --> [Pillow]
 UI --> [NumPy]
 @enduml
-Component Responsibilities
-Presentation Layer (FractalZoomerUI)
+```
 
-Capture user input events
+##Component Responsibilities
 
-Manage view state
+###Presentation Layer (FractalZoomerUI)
 
-Coordinate fractal computations
+-Capture user input events
+-Manage view state
+-Coordinate fractal computations
+-Render visual output
 
-Render visual output
+###Business Logic Layer (Fractal Classes)
 
-Business Logic Layer (Fractal Classes)
+-Implement mathematical algorithms
+-Calculate iteration counts
+-Provide consistent interface
 
-Implement mathematical algorithms
+###Foundation Layer
 
-Calculate iteration counts
+-NumPy: Numerical operations
+-Pillow: Image creation
+-tkinter: GUI framework
 
-Provide consistent interface
+##Modelling
 
-Foundation Layer
+###Object-Oriented Design
 
-NumPy: Numerical operations
-
-Pillow: Image creation
-
-tkinter: GUI framework
-
-Modelling
-Object-Oriented Design
-Class Diagram
+####Class Diagram
 
 ```plantuml
 @startuml
@@ -170,8 +168,8 @@ FractalZoomerUI *-- BurningShipSet
 ## Interaction
 ### Sequence Diagram: Zoom Interaction
 
-Interaction
-Sequence Diagram: Zoom Interaction
+
+```plantuml
 @startuml
 actor User
 participant "UI" as UI
@@ -192,11 +190,10 @@ UI -> UI: display
 User <-- UI: updated view
 deactivate UI
 @enduml
-
-
+```
 
 ### Sequence Diagram: Slider Update
-
+```plantuml
 @startuml
 actor User
 participant "UI" as UI
@@ -213,13 +210,13 @@ UI -> UI: render_fractal()
 User <-- UI: updated fractal
 deactivate UI
 @enduml
-
-
+```
 
 ## Behaviour
 
 ### State Diagram
 
+```plantuml
 @startuml
 [*] --> Initializing
 Initializing --> Ready : setup complete
@@ -235,8 +232,9 @@ Ready --> [*] : window closed
 @enduml
 ```
 
-Behaviour
-State Diagram
+###Fractal Iteration Algorithm Flow
+
+```plantuml
 @startuml
 start
 :Initialize z = 0, i = 0;
@@ -256,34 +254,29 @@ endif
 :i++;
 repeat while (continue)
 @enduml
-Performance
-Optimizations
-Quick Interior Tests (Mandelbrot): ~20% faster
+```
 
-Integer Arithmetic: Grayscale mapping
+##Performance
+###Optimizations
 
-Simple Algorithms: Clear, adequate performance
+-Quick Interior Tests (Mandelbrot): ~20% faster
+-Integer Arithmetic: Grayscale mapping
+-Simple Algorithms: Clear, adequate performance
 
-Current Limitations
-Single-threaded
+###Current Limitations
+-Single-threaded
+-~2-3 seconds for 600×400 at 256 iterations
 
-~2-3 seconds for 600×400 at 256 iterations
+###Future Options
+-Multiprocessing
+-NumPy vectorization
+-GPU acceleration
 
-Future Options
-Multiprocessing
-
-NumPy vectorization
-
-GPU acceleration
-
-Technology Justification
-Python 3.8+: Rapid development, readable
-
-tkinter: Built-in, zero dependencies
-
-NumPy: Industry standard, optimized
-
-Pillow: Simple image creation
+##Technology Justification
+-Python 3.8+: Rapid development, readable
+-tkinter: Built-in, zero dependencies
+-NumPy: Industry standard, optimized
+-Pillow: Simple image creation
 
 **Pillow**
 - Simple image creation
