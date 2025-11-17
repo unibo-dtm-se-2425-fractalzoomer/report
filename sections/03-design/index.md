@@ -27,32 +27,7 @@ This chapter explains the design strategies used to meet the requirements identi
 - **Microservices**: Single-machine application
 
 ### Component Diagram
-```plantuml
-@startuml
-package "Presentation Layer" {
-component [FractalZoomerUI] as UI
-}
-
-package "Business Logic Layer" {
-component [MandelbrotSet] as MB
-component [JuliaSet] as JS
-component [BurningShipSet] as BS
-}
-
-package "Foundation Layer" {
-component [NumPy]
-component [Pillow]
-component [tkinter]
-}
-
-UI --> MB : uses
-UI --> JS : uses
-UI --> BS : uses
-UI --> [tkinter]
-UI --> [Pillow]
-UI --> [NumPy]
-@enduml
-```
+![Component diagram showing layered architecture with three tiers: Presentation Layer containing FractalZoomerUI at the top, Business Logic Layer in the middle with MandelbrotSet, JuliaSet, and BurningShipSet components, and Foundation Layer at the bottom with NumPy, Pillow, and tkinter components. Arrows labeled uses connect FractalZoomerUI to each component in the other layers, illustrating the dependencies between layers in a clean, hierarchical software architecture design](images/Componentdiagram.png)
 
 ## Component Responsibilities
 
@@ -81,180 +56,26 @@ UI --> [NumPy]
 
 #### Class Diagram
 
-```plantuml
-@startuml
-class FractalZoomerUI {
-
-root: Tk
-
-canvas: Canvas
-
-center_x: float
-
-center_y: float
-
-half_width: float
-
-half_height: float
-
-max_iter: int
-
-fractal_type: str
-
-mandelbrot: MandelbrotSet
-
-julia: JuliaSet
-
-burning_ship: BurningShipSet
-__
-
-init(root: Tk)
-
-setup_ui(): void
-
-render_fractal(): void
-
-zoom_in(event: Event): void
-
-zoom_out(event: Event): void
-
-update_iterations(value: int): void
-
-change_fractal(): void
-}
-
-class MandelbrotSet {
-
-max_iter: int
-__
-
-init(max_iter: int)
-
-iterations(re: float, im: float): int
-
-{static} inside_fast(re: float, im: float): bool
-}
-
-class JuliaSet {
-
-cr: float
-
-ci: float
-
-max_iter: int
-__
-
-init(cr: float, ci: float, max_iter: int)
-
-iterations(zr: float, zi: float): int
-}
-
-class BurningShipSet {
-
-max_iter: int
-__
-
-init(max_iter: int)
-
-iterations(c_re: float, c_im: float): int
-}
-
-FractalZoomerUI *-- MandelbrotSet
-FractalZoomerUI *-- JuliaSet
-FractalZoomerUI *-- BurningShipSet
-@enduml
-```
+![Class diagram displaying object-orieROdeoRodeonted design for fractal zoomer application with four main classes. FractalZoomerUI class at top contains attributes like root Tk, canvas Canvas, center coordinates, dimensions, max_iter int, fractal_type str, and three fractal objects. Methods include init, setup_ui, render_fractal, zoom_in, zoom_out, update_iterations, and change_fractal. MandelbrotSet class on bottom left has max_iter int attribute and methods init, iterations, and static inside_fast. JuliaSet class in bottom center contains cr float, ci float, max_iter int attributes with init and iterations methods. BurningShipSet class on bottom right has max_iter int attribute and init plus iterations methods. Composition relationships connect FractalZoomerUI to all three fractal classes with filled diamond arrows indicating ownership. Clean technical diagram with standard UML notation showing hierarchical software architecture](images/OODclassdiagram.png)
 
 ## Interaction
 ### Sequence Diagram: Zoom Interaction
 
-
-```plantuml
-@startuml
-actor User
-participant "UI" as UI
-participant "Fractal" as F
-
-User -> UI: click canvas
-activate UI
-UI -> UI: calculate bounds
-UI -> UI: render_fractal()
-
-loop each pixel
-UI -> F: iterations(x, y)
-F --> UI: count
-end
-
-UI -> UI: create image
-UI -> UI: display
-User <-- UI: updated view
-deactivate UI
-@enduml
-```
+![Sequence diagram illustrating zoom interaction workflow between User, UI, and Fractal components. User clicks canvas triggering UI activation. UI calculates bounds and calls render_fractal function. A loop processes each pixel by calling iterations method on Fractal component which returns count value to UI. UI then creates image, displays result, and returns updated view to User before deactivating. Vertical lifelines show object existence with rectangular activation boxes indicating processing periods. Horizontal arrows represent method calls and responses in chronological order from top to bottom. Clean technical diagram using standard UML sequence diagram notation with clear labels and systematic flow depicting interactive fractal rendering process](images/SequenceDiagram.png)
 
 ### Sequence Diagram: Slider Update
-```plantuml
-@startuml
-actor User
-participant "UI" as UI
-participant "MandelbrotSet" as MB
-participant "JuliaSet" as JS
-participant "BurningShipSet" as BS
 
-User -> UI: move slider
-activate UI
-UI -> MB: max_iter = value
-UI -> JS: max_iter = value
-UI -> BS: max_iter = value
-UI -> UI: render_fractal()
-User <-- UI: updated fractal
-deactivate UI
-@enduml
-```
+![Sequence diagram showing slider update interaction between User, UI, MandelbrotSet, JuliaSet, and BurningShipSet components. User moves slider triggering UI activation. UI sets max_iter value on all three fractal components MandelbrotSet, JuliaSet, and BurningShipSet, then calls render_fractal function internally. UI returns updated fractal to User and deactivates. Vertical lifelines represent object existence with rectangular activation boxes showing processing periods. Horizontal arrows indicate method calls flowing left to right in chronological sequence from top to bottom. Clean technical diagram using standard UML sequence notation depicting systematic parameter update workflow across multiple fractal computation classes](images/Sliderupdate.png)
 
 ## Behaviour
 
 ### State Diagram
 
-```plantuml
-@startuml
-[*] --> Initializing
-Initializing --> Ready : setup complete
-
-state Ready {
-[*] --> AwaitingInput
-}
-
-Ready --> Processing : user action
-Processing --> Rendering : parameters updated
-Rendering --> Ready : render complete
-Ready --> [*] : window closed
-@enduml
-```
+![State diagram showing application behavior with five states connected by labeled transitions. Starting from a black dot at top, an arrow leads to Initializing state represented as rounded rectangle. Arrow labeled setup complete connects to Ready state which contains nested AwaitingInput state with its own initial state marker. From Ready, arrow labeled user action leads to Processing state, then parameters updated arrow connects to Rendering state, and render complete arrow returns to Ready state creating a cycle. Final arrow labeled window closed leads from Ready to end state represented by black dot with circle. Clean technical diagram using standard UML state diagram notation depicting systematic application workflow from initialization through user interaction cycle to termination](images/behaviourStateDiagram.png)
 
 ### Fractal Iteration Algorithm Flow
 
-```plantuml
-@startuml
-start
-:Initialize z = 0, i = 0;
-
-repeat
-if (|z| > 2?) then (yes)
-:return i;
-stop
-endif
-
-if (i >= max_iter?) then (yes)
-:return max_iter;
-stop
-endif
-
-:z = z² + c;
-:i++;
-repeat while (continue)
-@enduml
-```
+![Flowchart diagram depicting fractal iteration algorithm with decision points and loops. Flow begins at black circle labeled start, proceeds to Initialize z equals 0 comma i equals 0 in rounded rectangle. Arrow points down to diamond-shaped decision node asking is absolute value of z greater than 2 question mark. If yes branch leads right to return i in rounded rectangle, then down to black circle with inner circle indicating end state. If no branch continues down to another diamond asking is i greater than or equal to max underscore iter question mark. Yes branch connects right to return max underscore iter rounded rectangle, then down to end state. No branch flows down to rectangular process box stating z equals z squared plus c, followed by i plus plus increment operation, then continue label with arrow looping back up to first decision point. Clean technical flowchart using standard symbols with black text on white background depicting systematic mathematical computation process for fractal generation algorithms](images/Algorithmflow.png)
 
 ## Performance
 ### Optimizations
