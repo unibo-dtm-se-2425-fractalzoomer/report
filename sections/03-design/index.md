@@ -1,104 +1,176 @@
----
-title: Design
-has_children: false
-nav_order: 4
----
+cd ~/Desktop/fractal-zoomer-project/report
 
+# Download the properly formatted file
+curl -o sections/03-design/design.md 'https://pastebin.com/raw/placeholder' 2>/dev/null || cat > sections/03-design/design.md << 'ENDOFFILE'
 # Design
 
-This chapter explains the design strategies used to meet the requirements identified in the analysis phase.
+## Architecture Overview
 
-## Architecture
+The Fractal Zoomer application follows a three-tier layered architecture that separates concerns between presentation, business logic, and foundational utilities. This design promotes modularity, testability, and maintainability.
 
-### Architectural Style: Layered Architecture
+![Component Diagram](images/component.png)
 
-**Chosen Style:** Layered (N-tier) Architecture
+### Architectural Layers
 
-**Why Layered?**
-- Clear **separation of concerns** between UI and computation logic
-- **Modular design** allows independent development and testing
-- **Reusability** of fractal computation modules in other contexts
-- **Maintainability** through isolated responsibilities
+**Presentation Layer**
+- `FractalZoomerUI`: Manages the graphical user interface using tkinter
+- Handles user input events (mouse clicks, drags, keyboard)
+- Renders fractal images to the canvas
+- Provides controls for fractal type selection
 
-**Why Not Other Styles?**
-- **Event-based**: Overkill for simple request-response interactions
-- **Shared dataspace**: No need for persistent shared state
-- **Service-oriented**: No distributed services needed
-- **Microservices**: Single-machine application
+**Business Logic Layer**
+- `MandelbrotSet`: Implements the Mandelbrot fractal algorithm
+- `JuliaSet`: Implements the Julia set fractal algorithm
+- `BurningShipSet`: Implements the Burning Ship fractal algorithm
+- Each class encapsulates the mathematical computation for its respective fractal
 
-### Component Diagram
-![Component diagram showing layered architecture with three tiers: Presentation Layer containing FractalZoomerUI at the top, Business Logic Layer in the middle with MandelbrotSet, JuliaSet, and BurningShipSet components, and Foundation Layer at the bottom with NumPy, Pillow, and tkinter components. Arrows labeled uses connect FractalZoomerUI to each component in the other layers, illustrating the dependencies between layers in a clean, hierarchical software architecture design](images/Componentdiagram.png)
+**Foundation Layer**
+- **NumPy**: Provides high-performance numerical array operations for coordinate calculations
+- **Pillow**: Handles image generation and color mapping from iteration matrices
+- **tkinter**: Provides the GUI framework for canvas rendering and user interaction
 
-## Component Responsibilities
+## Class Design
 
-### Presentation Layer (FractalZoomerUI)
+The application uses object-oriented design principles with inheritance and abstraction to create a flexible fractal rendering system.
 
--Capture user input events
--Manage view state
--Coordinate fractal computations
--Render visual output
+![Class Diagram](images/class.png)
 
-### Business Logic Layer (Fractal Classes)
+### FractalZoomerUI
 
--Implement mathematical algorithms
--Calculate iteration counts
--Provide consistent interface
+The main application class that manages the user interface and coordinates all interactions.
 
-### Foundation Layer
+**Attributes:**
+- `canvas`: tkinter Canvas widget for displaying fractals
+- `image`: PhotoImage object holding the current rendered fractal
+- `fractal_type`: String indicating current fractal ("mandelbrot", "julia", "burningship")
+- `center_x`, `center_y`: Complex plane coordinates of the viewport center
+- `zoom`: Current zoom level multiplier
 
--NumPy: Numerical operations
--Pillow: Image creation
--tkinter: GUI framework
+**Methods:**
+- `__init__()`: Initializes the window, canvas, and default fractal
+- `render()`: Computes and displays the current fractal view
+- `zoom_in(event)`: Zooms in centered on mouse click position
+- `zoom_out(event)`: Zooms out centered on mouse click position
+- `on_drag(event)`: Pans the view when user drags with Ctrl+click
+- `switch_fractal()`: Cycles between available fractal types
 
-## Modelling
+### FractalSet (Abstract Base Class)
 
-### Object-Oriented Design
+Defines the interface for all fractal computation classes.
 
-#### Class Diagram
+**Attributes:**
+- `width`: Image width in pixels
+- `height`: Image height in pixels
+- `max_iter`: Maximum iteration count for escape-time algorithm
 
-![Class diagram displaying object-orieROdeoRodeonted design for fractal zoomer application with four main classes. FractalZoomerUI class at top contains attributes like root Tk, canvas Canvas, center coordinates, dimensions, max_iter int, fractal_type str, and three fractal objects. Methods include init, setup_ui, render_fractal, zoom_in, zoom_out, update_iterations, and change_fractal. MandelbrotSet class on bottom left has max_iter int attribute and methods init, iterations, and static inside_fast. JuliaSet class in bottom center contains cr float, ci float, max_iter int attributes with init and iterations methods. BurningShipSet class on bottom right has max_iter int attribute and init plus iterations methods. Composition relationships connect FractalZoomerUI to all three fractal classes with filled diamond arrows indicating ownership. Clean technical diagram with standard UML notation showing hierarchical software architecture](images/OODclassdiagram.png)
+**Methods:**
+- `compute(xmin, xmax, ymin, ymax)`: Abstract method returning iteration count matrix
+- `generate_image()`: Converts iteration matrix to colorized PIL Image
 
-## Interaction
-### Sequence Diagram: Zoom Interaction
+### MandelbrotSet
 
-![Sequence diagram illustrating zoom interaction workflow between User, UI, and Fractal components. User clicks canvas triggering UI activation. UI calculates bounds and calls render_fractal function. A loop processes each pixel by calling iterations method on Fractal component which returns count value to UI. UI then creates image, displays result, and returns updated view to User before deactivating. Vertical lifelines show object existence with rectangular activation boxes indicating processing periods. Horizontal arrows represent method calls and responses in chronological order from top to bottom. Clean technical diagram using standard UML sequence diagram notation with clear labels and systematic flow depicting interactive fractal rendering process](images/SequenceDiagram.png)
+Implements the Mandelbrot set with the formula z = z^2 + c.
 
-### Sequence Diagram: Slider Update
+**Algorithm:**
+- For each pixel coordinate c, iterate the formula
+- Count iterations until magnitude exceeds 2 or max iterations reached
+- Return iteration counts as a 2D NumPy array
 
-![Sequence diagram showing slider update interaction between User, UI, MandelbrotSet, JuliaSet, and BurningShipSet components. User moves slider triggering UI activation. UI sets max_iter value on all three fractal components MandelbrotSet, JuliaSet, and BurningShipSet, then calls render_fractal function internally. UI returns updated fractal to User and deactivates. Vertical lifelines represent object existence with rectangular activation boxes showing processing periods. Horizontal arrows indicate method calls flowing left to right in chronological sequence from top to bottom. Clean technical diagram using standard UML sequence notation depicting systematic parameter update workflow across multiple fractal computation classes](images/Sliderupdate.png)
+### JuliaSet
 
-## Behaviour
+Implements Julia sets with fixed constant c.
 
-### State Diagram
+**Attributes:**
+- `c_real`: Real part of the Julia constant
+- `c_imag`: Imaginary part of the Julia constant
 
-![State diagram showing application behavior with five states connected by labeled transitions. Starting from a black dot at top, an arrow leads to Initializing state represented as rounded rectangle. Arrow labeled setup complete connects to Ready state which contains nested AwaitingInput state with its own initial state marker. From Ready, arrow labeled user action leads to Processing state, then parameters updated arrow connects to Rendering state, and render complete arrow returns to Ready state creating a cycle. Final arrow labeled window closed leads from Ready to end state represented by black dot with circle. Clean technical diagram using standard UML state diagram notation depicting systematic application workflow from initialization through user interaction cycle to termination](images/behaviourStateDiagram.png)
+**Algorithm:**
+- Uses fixed constant c = -0.4 + 0.6i
+- For each pixel coordinate as z0, iterate the formula
+- Return iteration counts
 
-### Fractal Iteration Algorithm Flow
+### BurningShipSet
 
-![Flowchart diagram depicting fractal iteration algorithm with decision points and loops. Flow begins at black circle labeled start, proceeds to Initialize z equals 0 comma i equals 0 in rounded rectangle. Arrow points down to diamond-shaped decision node asking is absolute value of z greater than 2 question mark. If yes branch leads right to return i in rounded rectangle, then down to black circle with inner circle indicating end state. If no branch continues down to another diamond asking is i greater than or equal to max underscore iter question mark. Yes branch connects right to return max underscore iter rounded rectangle, then down to end state. No branch flows down to rectangular process box stating z equals z squared plus c, followed by i plus plus increment operation, then continue label with arrow looping back up to first decision point. Clean technical flowchart using standard symbols with black text on white background depicting systematic mathematical computation process for fractal generation algorithms](images/Algorithmflow.png)
+Implements the Burning Ship fractal with absolute value operations.
 
-## Performance
-### Optimizations
+**Algorithm:**
+- Takes absolute values of real and imaginary components before squaring
+- Produces distinctive ship-like structures in the rendered image
 
--Quick Interior Tests (Mandelbrot): ~20% faster
--Integer Arithmetic: Grayscale mapping
--Simple Algorithms: Clear, adequate performance
+## Interaction Flow
 
-### Current Limitations
--Single-threaded
--~2-3 seconds for 600×400 at 256 iterations
+The following sequence diagram illustrates the typical user interaction flow when zooming into a fractal.
 
-### Future Options
--Multiprocessing
--NumPy vectorization
--GPU acceleration
+![Sequence Diagram](images/sequence.png)
 
-## Technology Justification
--Python 3.8+: Rapid development, readable
--tkinter: Built-in, zero dependencies
--NumPy: Industry standard, optimized
--Pillow: Simple image creation
+### Zoom-In Workflow
 
-**Pillow**
-- Simple image creation
-- Decision: Simplifies rendering
+1. User clicks on the canvas to zoom in
+2. FractalZoomerUI receives the click event
+3. Calculate new viewport: Updates center coordinates and increases zoom
+4. Request computation: Calls fractal.compute() with new coordinate bounds
+5. FractalSet creates coordinate arrays using NumPy
+6. Compute iterations: Applies the escape-time algorithm vectorized over the grid
+7. Return matrix: NumPy array of iteration counts
+8. Generate image: Passes matrix to Pillow for color mapping
+9. Render: Displays the new image on the tkinter canvas
+10. User sees the zoomed fractal view
+
+### Pan Workflow
+
+When the user holds Ctrl and drags:
+1. Mouse down event stores the starting position
+2. Mouse move events calculate the delta
+3. Center coordinates are adjusted by the delta scaled by zoom
+4. Render is triggered on mouse release
+
+## Deployment Architecture
+
+The application runs as a standalone desktop application on the user's local machine.
+
+![Deployment Diagram](images/deployment.png)
+
+### System Requirements
+
+**Runtime Environment:**
+- Python 3.10 or higher
+- Operating System: Windows, macOS, or Linux with GUI support
+
+**Dependencies:**
+- NumPy: Scientific computing library for efficient array operations
+- Pillow: Image processing library for fractal rendering
+- tkinter: GUI library bundled with Python standard library
+
+### Installation and Execution
+
+The application is distributed as a Python package managed by Poetry. All dependencies are resolved and installed in an isolated virtual environment, ensuring consistent behavior across different systems.
+
+## Design Patterns
+
+### Strategy Pattern
+The interchangeable fractal algorithms follow the Strategy pattern, allowing runtime selection of computation strategies through the abstract FractalSet interface.
+
+### Template Method Pattern
+The FractalSet base class provides a generate_image() template method that uses the abstract compute() method, defining the skeleton of the algorithm while letting subclasses customize specific steps.
+
+### Model-View-Controller
+- Model: FractalSet subclasses for data computation
+- View: tkinter Canvas for rendering
+- Controller: FractalZoomerUI for event handling and coordination
+
+## Performance Considerations
+
+### NumPy Vectorization
+All fractal computations are fully vectorized using NumPy arrays, avoiding explicit Python loops. This provides significant performance improvements by leveraging optimized C implementations.
+
+### Iteration Limits
+The max_iter parameter balances visual detail with computation time. Default of 100 iterations provides good quality for typical zoom levels while maintaining interactive rendering speeds.
+
+### Image Resolution
+Fixed 800x600 resolution provides a balance between visual quality and computation speed. Higher resolutions would require proportionally more computation time.
+
+## Extensibility
+
+The architecture supports easy addition of new fractal types by creating a new class inheriting from FractalSet, implementing the compute() method with the fractal algorithm, and adding the fractal to the switch cycle in FractalZoomerUI.
+
+
