@@ -1,9 +1,3 @@
----
-title: Concept
-has_children: false
-nav_order: 1
----
-
 # Concept
 
 ## Project Vision
