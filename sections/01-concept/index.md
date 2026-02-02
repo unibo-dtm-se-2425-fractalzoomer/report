@@ -8,28 +8,19 @@ nav_order: 1
 
 ## Project Vision
 
-The Fractal Zoomer is an interactive desktop application that enables users to explore the mathematical beauty of fractal geometry through real-time visualization and navigation. The application provides an intuitive interface for zooming into and panning across three classic fractals: the Mandelbrot set, Julia sets, and the Burning Ship fractal.
+The Fractal Zoomer is an interactive desktop application that enables users to explore the mathematical fractal geometry through real-time visualization and navigation. The application provides an intuitive interface for zooming into and panning across three classic fractals: the Mandelbrot set, Julia sets, and the Burning Ship fractal.
 
 ## Project Goals
-
-### Primary Goals
 - Create an accessible tool for exploring mathematical fractals
 - Provide real-time, interactive fractal rendering
 - Support multiple fractal types with seamless switching
 - Deliver smooth zoom and pan interactions
-
-### Educational Goals
-- Make complex mathematical concepts visually tangible
-- Enable exploration of fractal self-similarity
-- Demonstrate computational geometry principles
-- Support mathematics education at various levels
 
 ## Target Audience
 
 ### Primary Users
 - **Students**: Learning about complex numbers, recursion, and computational mathematics
 - **Educators**: Teaching fractal geometry and chaos theory in classrooms
-- **Hobbyists**: Enthusiasts interested in mathematical art and visualization
 
 ### Secondary Users
 - **Developers**: Learning NumPy-based numerical computing and GUI development

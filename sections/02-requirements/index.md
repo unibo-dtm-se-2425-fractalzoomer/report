@@ -4,100 +4,90 @@ has_children: false
 nav_order: 2
 ---
 
-# 02-Requirements
+# Requirements
 
-## Functional Requirements
+## What the app needs to do
 
-### FR1: Fractal Visualization
-- The system must render fractal patterns in real-time
-- Support multiple fractal types (Mandelbrot, Julia, Burning Ship, etc.)
-- Display fractals with customizable color schemes
-- Allow zooming with smooth transitions
+### FR1: Show fractals
+- Render Mandelbrot, Julia, and Burning Ship fractals in real-time
+- Let users zoom in smoothly
+- Use colors to visualize the patterns
 
-### FR2: User Interaction
-- Users can zoom in/out using mouse scroll or buttons
-- Users can pan across the fractal space
-- Users can reset view to default position
-- Users can adjust parameters (iteration depth, zoom level, color palette)
+### FR2: User interactions
+- Click to zoom in, right-click to zoom out
+- Ctrl+drag to pan around
+- Reset button to go back to the default view
+- Slider to adjust iteration count (more iterations = more detail)
 
-### FR3: Parameter Control
-- Users can adjust maximum iterations (affects detail and computation time)
-- Users can select different color schemes
-- Users can input custom coordinates for specific regions
-- Users can save favorite views
+### FR3: Controls
+- Iteration slider from 50 to 500
+- Switch between fractal types with radio buttons
+- Display current coordinates and zoom level
 
-### FR4: Performance
-- Rendering should complete within 1-2 seconds for typical views
-- Application should remain responsive during computation
-- Support for high-resolution output
+### FR4: Performance targets
+- Render within 1-2 seconds for normal views
+- Keep the app responsive while calculating
+- Don't freeze the UI
 
-### FR5: File Operations
-- Users can export current view as high-resolution image (PNG, JPEG)
-- Users can load previously saved presets from file
-- Application remembers last used settings between sessions
+### FR5: Export (nice to have)
+- Save current view as PNG or JPEG
+- Export at higher resolution than screen size
 
-## Non-Functional Requirements
+## Non-functional stuff
 
 ### NFR1: Usability
-- Interface should be intuitive and self-explanatory
-- Clear visual feedback for user actions
-- Responsive controls
+- Simple enough to use without reading instructions
+- Show what's happening (like when it's computing)
+- Controls should feel natural
 
 ### NFR2: Performance
-- Smooth rendering at 30+ FPS for interactive exploration
-- Efficient memory usage
-- Fast computation of fractal points
-- Memory usage < 500MB during typical operations
+- Keep memory usage under 500MB
+- Fast enough for interactive exploration
+- Use NumPy for speed
 
-### NFR3: Compatibility
-- Cross-platform support (Windows, macOS, Linux)
-- Python 3.8+ compatibility
-- Works with standard display resolutions (1280x720+)
+### NFR3: Cross-platform
+- Works on Windows, Mac, and Linux
+- Python 3.10+ required
+- Supports normal screen resolutions (1280x720 and up)
 
-### NFR4: Maintainability
-- Well-documented code
-- Clear separation of concerns (UI, computation, rendering)
-- Modular architecture for easy extension
-- PEP 8 style compliance
+### NFR4: Code quality
+- Clean code that's easy to understand
+- Separate UI from calculation logic
+- Follow PEP 8 Python style guide
+- Add docstrings for main functions
 
-### NFR5: Reliability
-- Application must not crash for any valid user input
-- Graceful handling of edge cases (extreme zoom, invalid coordinates)
-- Proper error messages and logging
+### NFR5: Stability
+- Don't crash on weird input
+- Handle extreme zoom levels gracefully
+- Show helpful error messages if something goes wrong
 
-## Implementation Requirements
+## Tech stack
 
-### IR1: Programming Language
-The system shall be implemented in **Python 3.8 or higher**.
+**Python 3.10+** - Main language
 
-### IR2: GUI Framework
-The system shall use **Tkinter** (built-in) or **PyQt5** for the graphical interface.
+**tkinter** - Built-in GUI framework (no extra installation needed)
 
-### IR3: Numerical Computing
-The system shall use **NumPy** for array operations and fractal calculations.
+**NumPy** - Fast array operations for fractal math
 
-### IR4: Image Rendering
-The system shall use **Pillow (PIL)** for image creation and display.
+**Pillow** - Creating and coloring images
 
-## Acceptance Criteria
+## What success looks like
 
-- All fractals render correctly and match mathematical definitions  
-- UI responds within 100ms to user interaction  
-- Zoom/pan works smoothly without lag  
-- Memory usage < 500MB for typical operations  
-- All unit tests pass  
-- Code coverage > 80%  
-- Application runs on Windows, macOS, and Linux  
-- Supports zoom from 1x to 1e10x magnification  
+- All three fractals render correctly
+- Zoom and pan work smoothly
+- At least 15 zoom levels supported
+- Memory stays under 500MB
+- Tests pass
+- Works on all three major operating systems
 
-## Glossary
+## Terminology
 
-**Fractal**: A self-similar mathematical structure exhibiting similar patterns at different scales.
+**Fractal** - Self-similar pattern that looks similar when you zoom in
 
-**Mandelbrot Set**: The set of complex numbers c for which z_{n+1} = z_n² + c remains bounded.
+**Mandelbrot Set** - Formula: z = z² + c, starting from z = 0
 
-**Julia Set**: A family of fractals where z_{n+1} = z_n² + c with fixed c and varying z_0.
+**Julia Set** - Same formula as Mandelbrot, but with a fixed c value
 
-**Iteration Count**: Maximum number of formula iterations before determining if a point is in the set.
+**Iterations** - How many times to repeat the formula (more = more detail but slower)
 
-**Escape Radius**: The threshold (|z| = 2) determining if a point has escaped to infinity.
+**Escape radius** - When |z| > 2, we know the point escapes to infinity

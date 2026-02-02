@@ -6,86 +6,65 @@ nav_order: 4
 
 # Development
 
-## DVCS Strategy
+## Git Setup
 
-### Repository Structure
-- **artifact**: Application source code
-- **report**: Project documentation
-- Hosted on GitHub: `unibo-dtm-se-2425-fractalzoomer/`
+We're using GitHub with two repositories:
+- **artifact**: The actual code
+- **report**: This documentation
 
-### Branching
-- `main`: Production-ready code only
-- Feature branches: `feature/<description>`
-- Fix branches: `fix/<description>`
-- Protected main branch requires PR reviews
+We keep `main` branch for working code only. When adding features, we create a `feature/` or `fix/` branch, then merge via pull request after someone reviews it.
 
-### Commit Messages
-Following Conventional Commits:
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation
-- `refactor`: Code restructuring
+### Commit style
 
-**Example:** `fix: Add option key support for zooming out on Macbook`
+We're following Conventional Commits (mostly):
+- `feat:` for new features
+- `fix:` for bug fixes  
+- `docs:` for documentation
+- `refactor:` when cleaning up code
 
-### Pull Request Process
-1. Create feature branch from main
-2. Implement and test changes
-3. Commit with conventional messages
-4. Open PR with description
-5. Code review by team member
-6. Merge and delete branch
+Example: `fix: Add option key support for zooming out on Macbook`
 
-## Implementation Details
+## How it's built
 
-### Architecture
-Standalone desktop application with no network communication. All computation happens locally.
+This is a standalone desktop app - no servers, no network calls, everything runs locally on your computer.
 
-### Data Representation
-- **NumPy arrays**: Store iteration counts and coordinate grids
-- **PIL Images**: RGB color mapping from iteration data
-- **Python objects**: Application state in memory
-- No persistent storage or databases
+**Data:**
+- NumPy arrays store the iteration counts and coordinates
+- PIL creates the images from those arrays
+- Everything lives in memory while the app runs
 
-### Authentication
-Not applicable - single-user desktop application with no network features.
+**No authentication needed** - it's just a single-user desktop app.
 
-## Technology Stack
+## Tech choices
 
-### Core Language
-**Python 3.10+**
-- Excellent numerical libraries (NumPy)
-- Built-in GUI (tkinter)
-- Cross-platform compatibility
-- Rapid development
+### Python 3.10+
+We went with Python because:
+- NumPy is perfect for the heavy math
+- tkinter comes built-in for the GUI
+- Works on Windows, Mac, and Linux
+- Quick to develop and iterate
 
-### Dependencies
+### Key libraries
 
 **NumPy (≥1.24.0)**
-- Vectorized array operations (10-100x faster than loops)
-- Complex number arithmetic
-- Coordinate grid generation
+Does all the fractal calculations. Using NumPy's vectorized operations makes it 10-100x faster than regular Python loops.
 
-**Pillow (≥10.0.0)**
-- Image creation and color mapping
-- tkinter integration
-- RGB conversion from arrays
+**Pillow (≥10.0.0)**  
+Creates the actual images and handles colors.
 
-**tkinter (Built-in)**
-- Zero external dependencies
-- Cross-platform GUI
-- Lightweight and fast
+**tkinter (built-in)**
+The GUI framework. It's already included with Python, so no extra dependencies needed.
 
-### Development Tools
-- **Poetry**: Dependency management
-- **pytest**: Unit testing
-- **Git/GitHub**: Version control and collaboration
+### Dev tools
+- **Poetry** for managing dependencies
+- **pytest** for testing
+- **Git/GitHub** for version control
 
-### External Services
-None - fully offline application with no cloud dependencies.
+No external services - this runs completely offline.
 
-### Development Setup
+## Getting started
 
+Clone and run:
 ```bash
 git clone https://github.com/unibo-dtm-se-2425-fractalzoomer/artifact.git
 cd artifact
@@ -93,10 +72,10 @@ poetry install
 poetry run python -m fractalzoomer.ui.app
 ```
 
-### Versioning
-Semantic Versioning (MAJOR.MINOR.PATCH):
+## Versions
 
-- Current: **4.0.1**
-- **4.0.1**: Option key zoom fix (Macbook)
-- **4.0.0**: Ctrl+drag panning
-- **3.0.0**: Windows context manager fix
+We use Semantic Versioning (MAJOR.MINOR.PATCH):
+
+- **4.0.1** (current): Fixed Option key zoom on Mac
+- **4.0.0**: Added Ctrl+drag panning (changed how controls work)
+- **3.0.0**: Fixed window closing issue on Windows
