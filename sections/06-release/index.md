@@ -6,26 +6,69 @@ nav_order: 7
 
 # Release
 
-- Which and how many artefacts are produced from your project's codebase?
-- Onto which repositories (e.g. PyPI, Docker Hub, GitHub Packages, NPM etc.) are they released? Why?
-- How are they released (e.g. manually, automatically, etc.)?
-   + report the configuration steps and commands to run to release the artefacts
+## What we release
 
-## Choice of the license
+Just one thing: a Python desktop app distributed through GitHub.
 
-- Which license did you choose for your artefacts? Why?
-- Which license did you choose for your code? Why?
+We don't publish to PyPI because this isn't a library - it's an application. Users just clone the repo and run it with Poetry.
 
-## Choice of the versioning schema
+GitHub works well for us because:
+- It's a course project, not a commercial product
+- Easy version tracking with tags
+- Users can download specific versions
+- No need for Docker or package registries
 
-- Which versioning schema (e.g. date-based versioning, SemVer, etc.) did you choose for your artefacts? Why?
-   + how does the versioning schema work?
+## License
 
-- In case of multiple artefacts, are the version numbers aligned or each artefact has its own versioning pace? Why?
+**MIT License** for everything.
 
-- Describe when and how to create a new version of the artefacts in your project
-   + e.g. when to increment the major, minor, and patch version numbers
-   + e.g. how to create a new release branch
-   + e.g. how to create a new tag
-   + e.g. how to create a new release on GitHub
+Why MIT?
+- Simple and permissive
+- Common for university projects
+- Anyone can use, modify, and learn from the code
+- No complicated restrictions
 
+## Versioning
+
+We use **Semantic Versioning** (MAJOR.MINOR.PATCH):
+
+- **PATCH** (like 4.0.1): Bug fixes, no new features
+- **MINOR** (like 4.1.0): New features, backward compatible
+- **MAJOR** (like 5.0.0): Breaking changes
+
+Our versions so far:
+- **4.0.1**: Fixed Option key zoom on Mac (bug fix → PATCH)
+- **4.0.0**: Added Ctrl+drag panning (changed controls → MAJOR)
+- **3.0.0**: Fixed window closing on Windows (platform fix → MAJOR)
+
+## How to release
+
+When we want to release a new version:
+
+1. **Make sure tests pass**
+```bash
+poetry run pytest -v
+```
+
+2. **Update version in pyproject.toml**
+```toml
+version = "4.0.2"  # or whatever the new version is
+```
+
+3. **Commit and tag**
+```bash
+git add pyproject.toml
+git commit -m "chore: bump version to 4.0.2"
+git push origin main
+
+git tag -a v4.0.2 -m "Fix XYZ bug"
+git push origin v4.0.2
+```
+
+4. **Create GitHub Release**
+- Go to GitHub repo → Releases → "Draft a new release"
+- Pick the tag we just created
+- Write what changed
+- Publish
+
+That's it. No complicated CI/CD, no container builds. Just tag and release on GitHub.

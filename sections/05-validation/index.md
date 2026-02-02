@@ -8,42 +8,78 @@ nav_order: 6
 
 ## Testing approach
 
-- Describe what approach you followed for testing your software
-- If you followed TDD, describe it here
-- Also mention which testing framework you used (e.g. `unittest` or `pytest`) and why
+We used **pytest** for testing because it's simpler than unittest and has better error messages. We didn't follow strict TDD (test-driven development), but we wrote tests as we built features.
 
-## Testing (automated)
+The focus was on testing the fractal math and coordinate calculations. We skipped automated testing for the tkinter GUI since it's really difficult to test GUI components automatically - manual testing works better for that.
 
-> General recommendation: when discussing the tests below, please track to which requirement each test is related to.
+## Automated tests
 
-### Unit testing
+### Unit tests
 
-- Describe the unit tests you developed, and their rationale
-- Report success rate and test coverage here
+We have **85 tests** across 4 files, all passing with **95% coverage**.
 
-### Integration testing
+**What we tested:**
 
-- Describe couples of components that you tested together, and the corresponding test rationale/plan
+`test_coordinate_mapping.py` (20 tests) - Coordinate conversions
+- Converting screen pixels to complex plane coordinates
+- Going back from complex to screen coordinates
+- Making sure roundtrip conversions work correctly
 
-- Report success rate and test coverage here
+`test_core.py` (32 tests) - The fractal algorithms
+- All three fractals (Mandelbrot, Julia, Burning Ship)
+- Parameter validation
+- Making sure each fractal computes correctly
 
-- If you used [test doubles](https://en.wikipedia.org/wiki/Test_double), describe her which type of double you used, and why
+`test_exporter.py` (22 tests) - Image export
+- Saving as PNG, JPEG, BMP
+- Adding metadata to images
+- Color mapping from iteration data
 
-### System testing
+`test_parameter_julia.py` (11 tests) - Julia set parameters
+- Testing different c values
+- Preset configurations
+- Edge cases
 
-- Describe the tests that you developed to automatically test the system as a whole
-    + and the corresponding test rationale/plan
-    + better would be to have system tests that match the acceptance criteria of the requirements
+### Coverage
 
-- Report success rate and test coverage here
+| File | Coverage | Notes |
+|------|----------|-------|
+| coordinates.py | 100% | All coordinate math covered |
+| mandelbrot.py | 97% | One edge case branch not hit |
+| julia.py | 96% | Almost complete |
+| exporter.py | 93% | Main functionality covered |
+| burning_ship.py | 92% | Core algorithm tested |
 
-- If you adopted containers (e.g. Docker compose) for testing, describe how you used them here
-    + e.g. to run the system in a clean environment, or to run the tests in a clean environment
+Overall: **95% coverage**
 
-## Acceptance tests (manual)
+The UI file (`app.py`) isn't included because testing tkinter is more trouble than it's worth - we test that manually.
 
-- If you did any manual testing, describe it here
-- Report the test rationale/plan so that another person can repeat the tests
-    + better would be for acceptance tests to match the acceptance criteria of the requirements
-- Report success rate here
+### Running tests
 
+```bash
+poetry run pytest --cov=fractalzoomer --cov-report=term-missing -v
+```
+
+## Manual testing
+
+For the GUI, we manually tested:
+
+**Zoom and pan**
+- Click to zoom in, right-click (or Option on Mac) to zoom out
+- Ctrl+drag to pan around
+- Tested going 15+ zoom levels deep
+
+**Fractal switching**
+- Switch between all three fractals with radio buttons
+- Make sure it switches within 3 seconds
+
+**Iteration slider**
+- Adjust from 50 to 500 iterations
+- Check that more iterations = more detail
+
+**Cross-platform**
+- Tested on Mac (Option key zoom fix in v4.0.1)
+- Tested on Windows (window closing fix in v3.0.0)
+- Tested on Linux (works fine)
+
+All manual tests passed. The app is responsive and doesn't freeze during calculations.
