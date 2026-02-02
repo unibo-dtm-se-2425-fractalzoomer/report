@@ -34,15 +34,15 @@ To run the application:
 git clone https://github.com/unibo-dtm-se-2425-fractalzoomer/artifact.git
 cd artifact
 poetry install
-poetry run python -m fractalzoomer.ui.app
+poetry run fraactalzoomer
 ```
 
 See the [Deployment](sections/07-deployment) section for detailed installation instructions.
 
 ## Team
 
-- Diana Lastovetska
-- Luca Mambelli
+- [Diana Lastovetska](https://github.com/lasdianaa)
+- [Luca Mambelli](https://github.com/LucaM711)
 
 **Course:** Software Engineering (Digital Transformation Management)  
 **University:** Alma Mater Studiorum - Università di Bologna  
