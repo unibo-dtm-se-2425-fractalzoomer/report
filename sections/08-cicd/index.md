@@ -31,7 +31,7 @@ Simple reasons:
 
 ## How it works
 
-We have a workflow file at `.github/workflows/test.yml` that:
+We have a workflow file at `.github/workflows/check.yml` that:
 
 1. Triggers on push or PR
 2. Sets up Python 3.11
@@ -60,7 +60,7 @@ jobs:
         run: poetry run pytest --cov
 ```
 
-We apply semantic release principles to versioning and releases, plus TestPyPI for distribution (see [Release](sections/06-release) for details).
+We apply semantic release principles to versioning and releases, plus TestPyPI for distribution (see [Release](__sections/06-release__) for details).
 
 ## Deploy Workflow
 
