@@ -65,17 +65,17 @@ poetry run pytest -v
 
 2. **Update version in pyproject.toml**
 ```toml
-version = "4.0.2"  # or whatever the new version is
+version = "4.1.0"  # or whatever the new version is
 ```
 
 3. **Commit and tag**
 ```bash
 git add pyproject.toml
-git commit -m "chore: bump version to 4.0.2"
+git commit -m "chore: bump version to 4.1.0"
 git push origin main
 
-git tag -a v4.0.2 -m "Fix XYZ bug"
-git push origin v4.0.2
+git tag -a v4.1.0 -m "Fix XYZ bug"
+git push origin v4.1.0
 ```
 
 4. **Create GitHub Release**
@@ -84,4 +84,3 @@ git push origin v4.0.2
 - Write what changed
 - Publish
 
-That's it. No complicated CI/CD, no container builds. Just tag and release on GitHub.
