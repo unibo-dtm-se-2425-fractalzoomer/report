@@ -37,7 +37,7 @@ This is a standalone desktop app - no servers, no network calls, everything runs
 
 ## Tech choices
 
-### Python 3.10+
+### Python 3.11+
 We went with Python because:
 - NumPy is perfect for the heavy math
 - tkinter comes built-in for the GUI
@@ -46,10 +46,10 @@ We went with Python because:
 
 ### Key libraries
 
-**NumPy (≥1.24.0)**
+**NumPy (≥2.4.0)**
 Does all the fractal calculations. Using NumPy's vectorized operations makes it 10-100x faster than regular Python loops.
 
-**Pillow (≥10.0.0)**  
+**Pillow (≥12.0.0)**  
 Creates the actual images and handles colors.
 
 **tkinter (built-in)**
@@ -57,7 +57,7 @@ The GUI framework. It's already included with Python, so no extra dependencies n
 
 ### Dev tools
 - **Poetry** for managing dependencies
-- **pytest** for testing
+- **pytest** for testing. Preferred instead of unittest for simplified writing and readability.
 - **Git/GitHub** for version control
 
 No external services - this runs completely offline.
@@ -76,6 +76,6 @@ poetry run python -m fractalzoomer.ui.app
 
 We use Semantic Versioning (MAJOR.MINOR.PATCH):
 
-- **4.0.1** (current): Fixed Option key zoom on Mac
+- **4.1.0** (current): Fixed Option key zoom on Mac
 - **4.0.0**: Added Ctrl+drag panning (changed how controls work)
 - **3.0.0**: Fixed window closing issue on Windows

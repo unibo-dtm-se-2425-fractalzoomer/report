@@ -47,7 +47,7 @@ nav_order: 2
 
 ### NFR3: Cross-platform
 - Works on Windows, Mac, and Linux
-- Python 3.10+ required
+- Python 3.11+ required
 - Supports normal screen resolutions (1280x720 and up)
 
 ### NFR4: Code quality
@@ -63,7 +63,7 @@ nav_order: 2
 
 ## Tech stack
 
-**Python 3.10+** - Main language
+**Python 3.11+** - Main language
 
 **tkinter** - Built-in GUI framework (no extra installation needed)
 

@@ -77,7 +77,7 @@ For panning (Ctrl+drag), it just updates the center coordinates based on how far
 Just on your local computer - no servers involved. 
 
 **Requirements:**
-- Python 3.10+
+- Python 3.11+
 - Works on Windows, Mac, or Linux
 - NumPy and Pillow installed (Poetry handles this)
 
