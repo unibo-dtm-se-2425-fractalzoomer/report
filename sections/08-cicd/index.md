@@ -8,7 +8,7 @@ nav_order: 9
 
 ## What we automate
 
-We use GitHub Actions to automatically run tests whenever code is pushed. That's it - nothing fancy.
+We use GitHub Actions to automatically run tests whenever code is pushed.
 
 **What runs automatically:**
 - All 85 tests via pytest
@@ -29,7 +29,7 @@ Simple reasons:
 We have a workflow file at `.github/workflows/test.yml` that:
 
 1. Triggers on push or PR
-2. Sets up Python 3.10
+2. Sets up Python 3.11
 3. Installs Poetry
 4. Installs dependencies with `poetry install`
 5. Runs `poetry run pytest --cov`

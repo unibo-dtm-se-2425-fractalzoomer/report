@@ -12,13 +12,13 @@ This is a desktop app - no servers, no cloud, nothing fancy. Just runs on your c
 
 ### What you need
 
-**Python 3.10+**
+**Python 3.11+**
 Check: `python3 --version`
 
 If you don't have it:
-- Mac: `brew install python@3.10` or download from python.org
+- Mac: `brew install python@3.11` or download from python.org
 - Windows: Download from python.org
-- Linux: `sudo apt install python3.10` (Ubuntu) or `sudo dnf install python3.10` (Fedora)
+- Linux: `sudo apt install python3.11` (Ubuntu) or `sudo dnf install python3.11` (Fedora)
 
 **Poetry**
 Install: `curl -sSL https://install.python-poetry.org | python3 -`
