@@ -8,9 +8,9 @@ nav_order: 6
 
 ## Testing approach
 
-We used **pytest** for testing because it's simpler than unittest and has better error messages. We didn't follow strict TDD (test-driven development), but we wrote tests as we built features.
+We used **pytest** for testing because it's simpler than unittest and has better error messages. We followed TDD (test-driven development), writing failing tests before implementing features.
 
-The focus was on testing the fractal math and coordinate calculations. We skipped automated testing for the tkinter GUI since it's really difficult to test GUI components automatically - manual testing works better for that.
+The focus was on testing the fractal math and coordinate calculations. We skipped automated testing for the tkinter GUI since it's really difficult to test GUI components automatically enabling the user to test them manually instead.
 
 ## Automated tests
 
