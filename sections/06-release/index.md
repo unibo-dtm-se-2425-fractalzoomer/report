@@ -8,25 +8,38 @@ nav_order: 7
 
 ## What we release
 
-Just one thing: a Python desktop app distributed through GitHub.
+Fractalzoomer is a lightweight application intended to run on desktop and laptop computers without requiring powerful hardware. The distribution strategy combines GitHub Releases for source code access with TestPyPI for streamlined package installation, providing flexibility for both developers who want to examine the codebase and users who simply want to run the application.
 
-We don't publish to PyPI because this isn't a library - it's an application. Users just clone the repo and run it with Poetry.
+### PyPi installation:
+```bash
+pip install -i https://test.pypi.org/simple/ fractalzoomer
+```
 
-GitHub works well for us because:
-- It's a course project, not a commercial product
-- Easy version tracking with tags
-- Users can download specific versions
-- No need for Docker or package registries
+### GitHub installation (Source Code):
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/fractalzoomer.git
+```
+2. Navigate to the project directory:
+```bash
+cd fractalzoomer
+```
+3. Install dependencies:
+```bash
+poetry install
+```
+4. Run the application:
+```bash
+poetry run fractalzoomer
+```
+
+### Distribution Strategy:
+- **GitHub**: Provides access to the source code, allowing developers to contribute, report issues, and understand how the application works. Releases on GitHub include source code archives and changelogs.
+- **TestPyPI**: As an educational project, we use TestPyPi to provide us the ability to experience package distribution without polluting the official PyPI repository. This allows users to easily install the application using pip while we test our release process.
 
 ## License
 
-**MIT License** for everything.
-
-Why MIT?
-- Simple and permissive
-- Common for university projects
-- Anyone can use, modify, and learn from the code
-- No complicated restrictions
+**Apache License 2.0**: This license allows users to freely use, modify, and distribute the software, with minimal restrictions. It provides a permissive framework that encourages collaboration and sharing while protecting the original authors' rights.
 
 ## Versioning
 
