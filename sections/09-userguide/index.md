@@ -10,7 +10,7 @@ nav_order: 10
 
 After installing (see Deployment section), run:
 ```bash
-poetry run python -m fractalzoomer.ui.app
+poetry run fractalzoomer
 ```
 
 A window will open showing the Mandelbrot set.
@@ -29,7 +29,7 @@ A window will open showing the Mandelbrot set.
 ### Iteration control
 - Use the **slider** at the bottom to change iteration count (50-500)
 - More iterations = more detail, but slower rendering
-- Default is 256 (good balance)
+- Default is 128 (good balance)
 
 ### Switching fractals
 - Use **radio buttons** to switch between:

@@ -69,7 +69,7 @@ Clone and run:
 git clone https://github.com/unibo-dtm-se-2425-fractalzoomer/artifact.git
 cd artifact
 poetry install
-poetry run python -m fractalzoomer.ui.app
+poetry run fractalzoomer # Uses entry point defined in pyproject.toml
 ```
 
 ## Versions

@@ -99,7 +99,7 @@ We follow PEP 8. Main points:
 
 **Run the app during development:**
 ```bash
-poetry run python -m fractalzoomer.ui.app
+poetry run fractalzoomer
 ```
 
 **Add a dependency:**

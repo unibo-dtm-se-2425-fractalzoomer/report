@@ -43,7 +43,7 @@ This installs NumPy, Pillow, and sets up a virtual environment automatically.
 
 3. **Run it**
 ```bash
-poetry run python -m fractalzoomer.ui.app
+poetry run fractalzoomer
 ```
 
 That's it! The app window should open.
@@ -60,7 +60,7 @@ Should see "85 passed".
 No configuration needed. It just works with sensible defaults:
 - 600×400 window
 - Mandelbrot fractal shown first
-- 256 iterations
+- 128 iterations
 
 If you want to change defaults, edit `src/fractalzoomer/ui/app.py` (lines around 15-20).
 

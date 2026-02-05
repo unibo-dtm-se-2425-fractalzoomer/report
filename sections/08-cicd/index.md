@@ -46,7 +46,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.11'
       - name: Install Poetry
         run: pip install poetry
       - name: Install dependencies
@@ -55,7 +55,7 @@ jobs:
         run: poetry run pytest --cov
 ```
 
-No secrets needed since everything runs locally. No deployment automation - this is just a desktop app that users run on their machines.
+We apply semantic release principles to versioning and releases, plus TestPyPI for distribution (see [Release](sections/06-release) for details).
 
 ## What we don't automate
 

@@ -91,9 +91,9 @@ Just on your local computer - no servers involved.
 
 ## Performance notes
 
-We use NumPy's vectorized operations everywhere instead of Python loops - this makes it way faster. The default 100 iterations gives good detail while keeping it interactive.
+We use NumPy's vectorized operations everywhere instead of Python loops - this makes it way faster. The default 128 iterations gives good detail while keeping it interactive.
 
-Canvas is fixed at 800x600 to balance quality and speed.
+Canvas is fixed at 600x400 to balance quality and speed.
 
 ## Adding new fractals
 

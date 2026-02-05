@@ -22,7 +22,7 @@ The Fractal Zoomer is an interactive desktop application that enables users to e
 |---------|-------------|
 | **Multi-Fractal Support** | Explore Mandelbrot, Julia, and Burning Ship fractals |
 | **Interactive Navigation** | Click-to-zoom and drag-to-pan controls |
-| **Julia Presets** | Seven pre-configured Julia constants (Dendrite, Dragon, Spiral, etc.) |
+| **Julia Presets** | Eight pre-configured Julia constants (Dendrite, Dragon, Spiral, Custom, etc.) |
 | **Parameter Tuning** | Adjustable iteration count and Julia c-values via sliders |
 | **Image Export** | Save explorations as PNG, JPEG, or BMP with embedded metadata |
 | **Real-time Rendering** | Vectorized NumPy computations for responsive performance |

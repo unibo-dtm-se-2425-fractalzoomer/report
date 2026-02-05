@@ -48,7 +48,7 @@ nav_order: 2
 ### NFR3: Cross-platform
 - Works on Windows, Mac, and Linux
 - Python 3.11+ required
-- Supports normal screen resolutions (1280x720 and up)
+- Supports normal screen resolutions (Canvas is fixed at 600×400)
 
 ### NFR4: Code quality
 - Clean code that's easy to understand
@@ -88,6 +88,6 @@ nav_order: 2
 
 **Julia Set** - Same formula as Mandelbrot, but with a fixed c value
 
-**Iterations** - How many times to repeat the formula (more = more detail but slower)
+**Iterations** - How many times to repeat the formula. Default at 128 (more = more detail but slower)
 
 **Escape radius** - When |z| > 2, we know the point escapes to infinity
