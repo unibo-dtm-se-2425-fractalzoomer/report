@@ -8,7 +8,12 @@ nav_order: 9
 
 ## What we automate
 
-We use GitHub Actions to automatically run tests whenever code is pushed.
+We use GitHub Actions to automatically run tests whenever code is pushed:
+- Catch bugs before merging
+- Ensure cross-platform compatibility
+- Consistent release process
+- No manual version management errors
+- Test results visible directly in GitHub
 
 **What runs automatically:**
 - All 85 tests via pytest
@@ -46,7 +51,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: ['3.11', '3.12', '3.13']
       - name: Install Poetry
         run: pip install poetry
       - name: Install dependencies
@@ -57,11 +62,28 @@ jobs:
 
 We apply semantic release principles to versioning and releases, plus TestPyPI for distribution (see [Release](sections/06-release) for details).
 
-## What we don't automate
+## Deploy Workflow
 
-- Releases (we do those manually with git tags)
-- Deployment (there's nothing to deploy - it's a desktop app)
-- Building packages (users just clone and run)
-- Publishing to PyPI (not a library)
+Runs after successful tests on main branch:
 
-For a course project, automated testing is enough. Keeping it simple.
+1. Analyzes commits using Conventional Commits format
+2. Determines version bump (major/minor/patch)
+3. Updates pyproject.toml version
+4. Builds and publishes to TestPyPI
+5. Creates GitHub Release with changelog
+
+deploy.yml snippet:
+```yaml
+- name: Release
+  run: npx semantic-release
+  env:
+    PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
+    PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+### Secrets configuration
+The pipeline uses GitHub Secrets for secure storage of:
+- `PYPI_USERNAME` - TestPyPI username
+- `PYPI_PASSWORD` - TestPyPI password associated to a token provided by TestPyPI
+- `GITHUB_TOKEN` - GitHub token for releases
