@@ -93,6 +93,7 @@ nav_order: 13
 - Mathematical formula display
 - Integration with Jupyter notebooks
 - Mobile app version
+- Final release on PyPI (currently only TestPyPI)
 
 ## What we won't do
 
