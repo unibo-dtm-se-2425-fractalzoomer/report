@@ -34,7 +34,7 @@ To run the application:
 git clone https://github.com/unibo-dtm-se-2425-fractalzoomer/artifact.git
 cd artifact
 poetry install
-poetry run fraactalzoomer
+poetry run fractalzoomer
 ```
 
 See the [Deployment](sections/07-deployment) section for detailed installation instructions.
